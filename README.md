@@ -75,7 +75,7 @@ The Landing Screen should be in compose and the Forecast Screen should be in XML
 <br>
 <br>
 
-### Sample UI
+### Expected UI
 | Landing Screen | Forecast Screen |
 | ------------- | ------------- |
 | ![Screenshot 2024-08-30 at 6 29 22 PM](https://github.com/user-attachments/assets/d1bf8563-6581-45ef-80e3-dfa51277acf9)  | ![Screenshot 2024-08-30 at 6 29 38 PM](https://github.com/user-attachments/assets/5944e371-a08f-431e-8650-4ccbef7c5cec)  |
