@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("org.jetbrains.kotlin.plugin.serialization")
     id("com.android.library")
     id("kotlin-kapt")
 }
@@ -32,4 +33,13 @@ android {
 dependencies {
     implementation(project(":services:open_weather_map:api"))
 
+    implementation(libs.kotlin.serialization.json)
+
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.converter.kotlin.serialization)
+    implementation(libs.squareup.okhttp3)
+    implementation(libs.squareup.okhttp3.logging)
+
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 }
