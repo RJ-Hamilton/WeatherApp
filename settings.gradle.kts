@@ -1,12 +1,6 @@
 pluginManagement {
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
@@ -20,5 +14,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "WeatherApp"
+
 include(":app")
- 
+include(":services:open_weather_map:api")
+include(":services:open_weather_map:impl")

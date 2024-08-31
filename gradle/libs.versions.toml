@@ -39,4 +39,3 @@ squareup-retrofit = { module = "com.squareup.retrofit2:retrofit", version = "2.1
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 verison-catalog-update-plugin = { id = "nl.littlerobots.version-catalog-update", version  = "0.7.0" }
-
