@@ -33,6 +33,7 @@ android {
 dependencies {
     implementation(project(":services:open_weather_map:api"))
 
+    implementation(libs.kotlin.datetime)
     implementation(libs.kotlin.serialization.json)
 
     implementation(libs.squareup.retrofit)
@@ -40,6 +41,6 @@ dependencies {
     implementation(libs.squareup.okhttp3)
     implementation(libs.squareup.okhttp3.logging)
 
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
 }

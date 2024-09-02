@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.verison.catalog.update.plugin)
+    id("com.google.dagger.hilt.android") version libs.versions.hilt apply false
 }
 
 versionCatalogUpdate {

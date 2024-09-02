@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("plugin.serialization")
+    kotlin("kapt")
     id("com.android.library")
 }
 
@@ -29,5 +31,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlin.datetime)
     implementation(libs.squareup.retrofit)
+    implementation(libs.kotlin.serialization.json)
 }
