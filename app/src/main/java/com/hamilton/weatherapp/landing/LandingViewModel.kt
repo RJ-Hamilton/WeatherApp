@@ -3,6 +3,7 @@ package com.hamilton.weatherapp.landing
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hamilton.services.open_weather_map.api.WeatherRepository
+import com.hamilton.weatherapp.landing.models.CurrentWeatherUiModelMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +31,10 @@ class LandingViewModel @Inject constructor(
 
                 _uiState.update { currentState ->
                     currentState.copy(
-                        isLoading = false
+                        isLoading = false,
+                        currentWeatherUiModel = CurrentWeatherUiModelMapper.toCurrentWeatherUiModel(
+                            weatherData = currentWeather
+                        )
                     )
                 }
             }

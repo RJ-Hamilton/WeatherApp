@@ -4,4 +4,8 @@
     <string name="current_weather_error_message">Unable to fetch the weather data. Please try again later.</string>
     <string name="bottom_nav_home_button">Home</string>
     <string name="bottom_nav_forecast_button">Forecast</string>
+
+    <string name="landing_screen_wind_content_title">Wind</string>
+    <string name="landing_screen_wind_content_wind_speed">%d mph</string>
+    <string name="landing_screen_wind_content_feels_like">Feels like: %s</string>
 </resources>

@@ -6,22 +6,26 @@ import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
 
 @SuppressLint("MissingPermission")
 @Composable
 fun LandingScreen(modifier: Modifier = Modifier) {
-    val viewModel: LandingViewModel = viewModel()
+    val viewModel: LandingViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
 
     val context = LocalContext.current as ComponentActivity
@@ -52,9 +56,11 @@ fun LandingScreen(modifier: Modifier = Modifier) {
                         exception.printStackTrace()
                     }
             }
+
             shouldShowRequestPermissionRationale(context) -> {
                 viewModel.updateShouldShowPermissionRationale(true)
             }
+
             else -> {
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
             }
@@ -62,8 +68,13 @@ fun LandingScreen(modifier: Modifier = Modifier) {
     }
 
 
-    Column(modifier = modifier) {
-
+    Column(
+        modifier = modifier.background(color = MaterialTheme.colorScheme.background)
+    ) {
+        CurrentWeatherContent(
+            modifier = Modifier.padding(horizontal = 8.dp),
+            currentWeatherUiModel = state.currentWeatherUiModel
+        )
     }
 }
 

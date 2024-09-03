@@ -93,11 +93,11 @@ private fun BottomNavButton(
             modifier = Modifier.size(48.dp),
             imageVector = type.data.icon,
             contentDescription = null,
-            tint = Color.Black
+            tint = MaterialTheme.colorScheme.onPrimary
         )
         Text(
             text = stringResource(type.data.stringResource),
-            color = Color.Black
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }

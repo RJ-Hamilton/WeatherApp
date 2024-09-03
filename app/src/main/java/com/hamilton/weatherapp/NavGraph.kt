@@ -1,5 +1,7 @@
 package com.hamilton.weatherapp
 
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -8,7 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.hamilton.weatherapp.forecast.ForecastScreen
 import com.hamilton.weatherapp.ui.FORECAST_BUTTON_INDEX
 import com.hamilton.weatherapp.ui.HOME_BUTTON_INDEX
 import com.hamilton.weatherapp.landing.LandingScreen
@@ -46,7 +51,26 @@ fun NavGraph() {
             )
         }
     ) { innerPadding ->
-        LandingScreen(modifier = Modifier.padding(innerPadding))
+        NavHost(
+            modifier = Modifier.padding(innerPadding),
+            navController = navController,
+            startDestination = LandingScreen
+        ) {
+            composable<LandingScreen> {
+                BackHandler(enabled = true) {
+                    context as ComponentActivity
+                    context.finish()
+                }
+                LandingScreen()
+            }
+            composable<ForecastScreen> {
+                BackHandler(enabled = true) {
+                    context as ComponentActivity
+                    context.finish()
+                }
+                ForecastScreen()
+            }
+        }
     }
 }
 
