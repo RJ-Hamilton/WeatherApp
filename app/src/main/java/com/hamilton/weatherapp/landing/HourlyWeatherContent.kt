@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,8 +25,6 @@ import com.hamilton.weatherapp.landing.models.HourlyWeatherUiModel
 import com.hamilton.weatherapp.ui.theme.WeatherAppTheme
 import com.hamilton.weatherapp.utils.HorizontalSpacer
 import com.hamilton.weatherapp.utils.VerticalSpacer
-
-private const val WEATHER_ICON_URL = "https://openweathermap.org/img/wn/[iconName]@2x.png"
 
 @Composable
 fun HourlyWeatherContent(hourlyWeatherUiModels: List<HourlyWeatherUiModel>) {
