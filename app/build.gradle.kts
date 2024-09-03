@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.coil.compose)
     implementation(libs.dagger.hilt)
+    implementation(libs.androidx.recyclerview)
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.google.android.location)
     implementation(libs.kotlin.datetime)

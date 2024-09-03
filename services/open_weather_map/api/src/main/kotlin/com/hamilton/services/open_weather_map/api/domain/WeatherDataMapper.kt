@@ -21,9 +21,9 @@ object WeatherDataMapper {
             ),
             temperatureData = TemperatureData(
                 temperature = weatherResponse.main.temp,
-                temperatureHigh = weatherResponse.main.temp_max,
-                temperatureLow = weatherResponse.main.temp_min,
-                feelsLike = weatherResponse.main.feels_like
+                temperatureHigh = weatherResponse.main.tempMax,
+                temperatureLow = weatherResponse.main.tempMin,
+                feelsLike = weatherResponse.main.feelsLike
             ),
             date = convertUnixTimestampToLocalDateTime(
                 unixTime = weatherResponse.dt.toLong(),
@@ -43,11 +43,11 @@ object WeatherDataMapper {
             ),
             temperatureData = TemperatureData(
                 temperature = weatherDetails.main.temp,
-                temperatureHigh = weatherDetails.main.temp_max,
-                temperatureLow = weatherDetails.main.temp_min,
-                feelsLike = weatherDetails.main.feels_like
+                temperatureHigh = weatherDetails.main.tempMax,
+                temperatureLow = weatherDetails.main.tempMin,
+                feelsLike = weatherDetails.main.feelsLike
             ),
-            date = convertToLocalDateTime(weatherDetails.dt_txt),
+            date = convertToLocalDateTime(weatherDetails.dateText),
             weatherIcon = weatherDetails.weather.first().icon,
             weatherDescription = weatherDetails.weather.first().description
         )

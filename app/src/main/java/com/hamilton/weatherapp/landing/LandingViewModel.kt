@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,11 +68,16 @@ class LandingViewModel @Inject constructor(
                     lat = latitude,
                     long = longitude
                 )
+                val currentDateTime = Clock.System.now().toLocalDateTime(
+                    TimeZone.currentSystemDefault()
+                )
 
                 _uiState.update { currentState ->
                     currentState.copy(
                         isLoading = false,
-                        hourlyWeatherUiModels = forecastWeather.map { weatherData ->
+                        hourlyWeatherUiModels = forecastWeather.filter {
+                            it.date.date == currentDateTime.date
+                        }.map { weatherData ->
                             HourlyWeatherUiModelMapper.toHourlyWeatherUiModel(
                                 weatherData = weatherData
                             )

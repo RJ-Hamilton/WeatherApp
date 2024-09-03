@@ -22,6 +22,6 @@ interface OpenWeatherMapApi {
         @Query("lon") long: Double,
         @Query("appid") apiKey: String = API_KEY,
         @Query("units") units: String = "imperial",
-        @Query("cnt") numberOfTimestamps: Int
+        @Query("cnt") numberOfTimestamps: Int? = null
     ): ForecastResponse
 }

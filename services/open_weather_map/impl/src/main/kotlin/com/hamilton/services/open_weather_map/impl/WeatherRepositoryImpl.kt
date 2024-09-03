@@ -17,11 +17,15 @@ class WeatherRepositoryImpl(
         return WeatherDataMapper.mapFromWeatherResponse(response)
     }
 
-    override suspend fun getForecastWeather(lat: Double, long: Double): List<WeatherData> {
+    override suspend fun getForecastWeather(
+        lat: Double,
+        long: Double,
+        numberOfTimeStamps: Int?
+    ): List<WeatherData> {
         val response = openWeatherMapApi.getForecastWeather(
             lat = lat,
             long = long,
-            numberOfTimestamps = 5
+            numberOfTimestamps = numberOfTimeStamps
         )
 
         return response.list.map { weatherDetails ->
