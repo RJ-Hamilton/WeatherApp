@@ -5,6 +5,8 @@
     <string name="bottom_nav_home_button">Home</string>
     <string name="bottom_nav_forecast_button">Forecast</string>
 
+    <string name="weather_icon_url">https://openweathermap.org/img/wn/%s@2x.png</string>
+
     <string name="landing_screen_wind_content_title">Wind</string>
     <string name="landing_screen_wind_content_wind_speed">%d mph</string>
     <string name="landing_screen_wind_content_feels_like">Feels like: %s</string>

@@ -84,7 +84,7 @@ private fun BottomNavButton(
     onClick: (Int) -> Unit
 ) {
     Column(
-        modifier = modifier.clickable {
+        modifier = modifier.clickable(indication = null, interactionSource = null) {
             onClick(type.data.buttonIndex)
         },
         horizontalAlignment = Alignment.CenterHorizontally

@@ -69,9 +69,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.coil.compose)
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.google.android.location)
+    implementation(libs.kotlin.datetime)
     implementation(libs.kotlin.serialization.json)
 
     implementation(libs.squareup.retrofit)

@@ -2,6 +2,7 @@ package com.hamilton.weatherapp
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.EnterTransition
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import com.hamilton.weatherapp.ui.FORECAST_BUTTON_INDEX
 import com.hamilton.weatherapp.ui.HOME_BUTTON_INDEX
 import com.hamilton.weatherapp.landing.LandingScreen
 import com.hamilton.weatherapp.ui.WeatherBottomNavBar
+import com.hamilton.weatherapp.utils.Transitions
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -54,7 +56,11 @@ fun NavGraph() {
         NavHost(
             modifier = Modifier.padding(innerPadding),
             navController = navController,
-            startDestination = LandingScreen
+            startDestination = LandingScreen,
+            enterTransition = Transitions.EnterLeft,
+            exitTransition = Transitions.ExitLeft,
+            popEnterTransition = Transitions.EnterRight,
+            popExitTransition = Transitions.ExitRight
         ) {
             composable<LandingScreen> {
                 BackHandler(enabled = true) {
