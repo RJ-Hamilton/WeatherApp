@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
+import com.hamilton.weatherapp.ui.FullScreenLoadingIndicator
 import com.hamilton.weatherapp.utils.VerticalSpacer
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,27 +73,31 @@ fun LandingScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    PullToRefreshBox(
-        isRefreshing = state.isRefreshing,
-        onRefresh = {
-            viewModel.refresh(
-                latitude = state.latLong.latitude,
-                longitude = state.latLong.longitude,
-                isRefreshing = true
-            )
-        }
-    ) {
-        Column(
-            modifier = modifier.background(color = MaterialTheme.colorScheme.background)
+    if (state.isLoading) {
+        FullScreenLoadingIndicator()
+    } else {
+        PullToRefreshBox(
+            isRefreshing = state.isRefreshing,
+            onRefresh = {
+                viewModel.refresh(
+                    latitude = state.latLong.latitude,
+                    longitude = state.latLong.longitude,
+                    isRefreshing = true
+                )
+            }
         ) {
-            CurrentWeatherContent(
-                modifier = Modifier.padding(horizontal = 8.dp),
-                currentWeatherUiModel = state.currentWeatherUiModel
-            )
+            Column(
+                modifier = modifier.background(color = MaterialTheme.colorScheme.background)
+            ) {
+                CurrentWeatherContent(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    currentWeatherUiModel = state.currentWeatherUiModel
+                )
 
-            VerticalSpacer(32)
+                VerticalSpacer(32)
 
-            HourlyWeatherContent(state.hourlyWeatherUiModels)
+                HourlyWeatherContent(state.hourlyWeatherUiModels)
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hamilton.weatherapp.R
 import com.hamilton.weatherapp.databinding.ForecastItemBinding
 import com.hamilton.weatherapp.forecast.models.ForecastItemUiModel
+import com.hamilton.weatherapp.ui.FullScreenLoadingIndicator
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.viewbinding.GroupieViewHolder
 
@@ -30,29 +31,33 @@ fun ForecastScreen(modifier: Modifier = Modifier) {
         viewModel.getForecast(isRefreshing = false)
     }
 
-    PullToRefreshBox(
-        isRefreshing = state.isRefreshing,
-        onRefresh = {
-            viewModel.getForecast(
-                isRefreshing = true
+    if (state.isLoading) {
+        FullScreenLoadingIndicator()
+    } else {
+        PullToRefreshBox(
+            isRefreshing = state.isRefreshing,
+            onRefresh = {
+                viewModel.getForecast(
+                    isRefreshing = true
+                )
+            }
+        ) {
+            AndroidView(
+                modifier = modifier.fillMaxSize(),
+                factory = { context ->
+                    RecyclerView(context).apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = setupGroupieAdapter(
+                            state.forecastItemUiModels
+                        )
+                        addCustomItemDecoration(context)
+                    }
+                },
+                update = { view ->
+                    view.adapter = setupGroupieAdapter(state.forecastItemUiModels)
+                }
             )
         }
-    ) {
-        AndroidView(
-            modifier = modifier.fillMaxSize(),
-            factory = { context ->
-                RecyclerView(context).apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = setupGroupieAdapter(
-                        state.forecastItemUiModels
-                    )
-                    addCustomItemDecoration(context)
-                }
-            },
-            update = { view ->
-                view.adapter = setupGroupieAdapter(state.forecastItemUiModels)
-            }
-        )
     }
 }
 
