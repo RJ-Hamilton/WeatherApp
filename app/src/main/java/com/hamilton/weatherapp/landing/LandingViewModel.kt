@@ -104,15 +104,19 @@ class LandingViewModel @Inject constructor(
         }
     }
 
-    fun refresh(latitude: Double, longitude: Double, isRefreshing: Boolean = false) {
+    fun fetchData(latitude: Double, longitude: Double, isRefreshing: Boolean = false) {
         getCurrentWeather(latitude, longitude, isRefreshing)
         getForecastWeather(latitude, longitude, isRefreshing)
     }
 
     fun updatePermissionState(isLocationPermissionGranted: Boolean) {
         _uiState.update { currentState ->
-            currentState.copy(isLocationPermissionGranted = isLocationPermissionGranted)
+            currentState.copy(
+                isLocationPermissionGranted = isLocationPermissionGranted,
+                shouldShowPermissionRationale = !isLocationPermissionGranted
+            )
         }
+
     }
 
     fun updateShouldShowPermissionRationale(shouldShow: Boolean) {
