@@ -109,24 +109,6 @@ class LandingViewModel @Inject constructor(
         getForecastWeather(latitude, longitude, isRefreshing)
     }
 
-    fun updatePermissionState(isLocationPermissionGranted: Boolean) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                isLocationPermissionGranted = isLocationPermissionGranted,
-                shouldShowPermissionRationale = !isLocationPermissionGranted
-            )
-        }
-
-    }
-
-    fun updateShouldShowPermissionRationale(shouldShow: Boolean) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                shouldShowPermissionRationale = shouldShow
-            )
-        }
-    }
-
     private fun showLoadingState() {
         _uiState.update { currentState ->
             currentState.copy(
