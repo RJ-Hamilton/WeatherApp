@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hamilton.services.open_weather_map.api.WeatherRepository
 import com.hamilton.weatherapp.landing.models.CurrentWeatherUiModelMapper
 import com.hamilton.weatherapp.landing.models.HourlyWeatherUiModelMapper
+import com.hamilton.weatherapp.utils.LocationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LandingViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val locationManager: LocationManager
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LandingScreenState())
     val uiState: StateFlow<LandingScreenState> = _uiState.asStateFlow()
@@ -31,6 +33,7 @@ class LandingViewModel @Inject constructor(
             }
         } else {
             showLoadingState()
+            locationManager.saveLocation(latitude = latitude, longitude = longitude)
         }
         try {
             viewModelScope.launch(Dispatchers.IO) {
@@ -60,8 +63,14 @@ class LandingViewModel @Inject constructor(
         }
     }
 
-    fun getForecastWeather(latitude: Double, longitude: Double) {
-        showLoadingState()
+    fun getForecastWeather(latitude: Double, longitude: Double, isRefreshing: Boolean = false) {
+        if (isRefreshing) {
+            _uiState.update { currentState ->
+                currentState.copy(isRefreshing = true)
+            }
+        } else {
+            showLoadingState()
+        }
         try {
             viewModelScope.launch(Dispatchers.IO) {
                 val forecastWeather = weatherRepository.getForecastWeather(
@@ -88,10 +97,16 @@ class LandingViewModel @Inject constructor(
         } catch (e: Exception) {
             _uiState.update { currentState ->
                 currentState.copy(
-                    isLoading = false
+                    isLoading = false,
+                    isRefreshing = false
                 )
             }
         }
+    }
+
+    fun refresh(latitude: Double, longitude: Double, isRefreshing: Boolean = false) {
+        getCurrentWeather(latitude, longitude, isRefreshing)
+        getForecastWeather(latitude, longitude, isRefreshing)
     }
 
     fun updatePermissionState(isLocationPermissionGranted: Boolean) {

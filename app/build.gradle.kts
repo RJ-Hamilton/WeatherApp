@@ -40,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtension.get()
@@ -60,6 +61,7 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -74,6 +76,8 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.google.android.location)
+    implementation(libs.groupie)
+    implementation(libs.groupie.viewbinding)
     implementation(libs.kotlin.datetime)
     implementation(libs.kotlin.serialization.json)
 

@@ -4,6 +4,9 @@ buildscript {
         classpath(libs.kotlin.gradlePlugin)
         classpath(libs.kotlin.serialization.gradlePlugin)
     }
+    repositories {
+        mavenCentral()
+    }
 }
 
 plugins {
@@ -11,6 +14,14 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.verison.catalog.update.plugin)
     id("com.google.dagger.hilt.android") version libs.versions.hilt apply false
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
 }
 
 versionCatalogUpdate {

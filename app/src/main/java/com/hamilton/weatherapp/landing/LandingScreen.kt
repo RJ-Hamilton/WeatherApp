@@ -75,7 +75,7 @@ fun LandingScreen(modifier: Modifier = Modifier) {
     PullToRefreshBox(
         isRefreshing = state.isRefreshing,
         onRefresh = {
-            viewModel.getCurrentWeather(
+            viewModel.refresh(
                 latitude = state.latLong.latitude,
                 longitude = state.latLong.longitude,
                 isRefreshing = true
