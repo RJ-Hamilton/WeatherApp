@@ -12,7 +12,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
@@ -24,6 +23,7 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ForecastViewModelTest {
@@ -127,7 +127,7 @@ class ForecastViewModelTest {
         }
 
         // WHEN
-        viewModel.getForecast()
+        viewModel.getForecast(isRefreshing = true)
 
         // THEN
         assertEquals(3, testResults.size)

@@ -80,9 +80,9 @@ dependencies {
     implementation(libs.groupie.viewbinding)
     implementation(libs.kotlin.datetime)
     implementation(libs.kotlin.serialization.json)
-
     implementation(libs.squareup.retrofit)
 
+    testImplementation(kotlin("test"))
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.mockk)
