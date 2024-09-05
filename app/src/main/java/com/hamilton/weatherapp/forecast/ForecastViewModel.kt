@@ -6,6 +6,7 @@ import com.hamilton.services.open_weather_map.api.WeatherRepository
 import com.hamilton.weatherapp.forecast.models.ForecastItemUiModelMapper
 import com.hamilton.weatherapp.utils.LocationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ForecastViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
-    private val locationManager: LocationManager
+    private val locationManager: LocationManager,
+    private val coroutineDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ForecastScreenState())
     val uiState: StateFlow<ForecastScreenState> = _uiState.asStateFlow()
@@ -31,8 +33,8 @@ class ForecastViewModel @Inject constructor(
             showLoadingState()
         }
 
-        try {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(coroutineDispatcher) {
+            try {
                 val forecastWeather = weatherRepository.getForecastWeather(
                     lat = locationManager.getLatitude(),
                     long = locationManager.getLongitude()
@@ -49,13 +51,13 @@ class ForecastViewModel @Inject constructor(
                         }
                     )
                 }
-            }
-        } catch (e: Exception) {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    isLoading = false,
-                    isRefreshing = false
-                )
+            } catch (e: Exception) {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        isRefreshing = false
+                    )
+                }
             }
         }
     }

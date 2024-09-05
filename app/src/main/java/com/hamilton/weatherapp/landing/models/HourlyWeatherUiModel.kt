@@ -12,7 +12,7 @@ data class HourlyWeatherUiModel(
 )
 
 object HourlyWeatherUiModelMapper {
-    fun toHourlyWeatherUiModel(weatherData: WeatherData): HourlyWeatherUiModel {
+    fun fromWeatherData(weatherData: WeatherData): HourlyWeatherUiModel {
         val dateTimeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
 
         return HourlyWeatherUiModel(

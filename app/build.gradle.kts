@@ -84,5 +84,6 @@ dependencies {
     implementation(libs.squareup.retrofit)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk)
 }

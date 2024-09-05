@@ -10,7 +10,6 @@ kotlin = "1.9.23"
 coreKtx = "1.13.1"
 gradlePlugin = "8.2.2"
 junit = "4.13.2"
-junitVersion = "1.2.1"
 lifecycle = "2.8.4"
 activityCompose = "1.9.1"
 material3 = "1.3.0-rc01"
@@ -27,7 +26,6 @@ constraintLayout = "2.1.4"
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "gradlePlugin" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -54,7 +52,8 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 groupie = { module = "com.github.lisawray.groupie:groupie", version.ref = "groupieVersion" }
 groupie-viewbinding = { module = "com.github.lisawray.groupie:groupie-viewbinding", version.ref = "groupieVersion" }
-
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version = "1.7.3" }
+mockk = { module = "io.mockk:mockk", version = "1.13.12"}
 
 
 [plugins]

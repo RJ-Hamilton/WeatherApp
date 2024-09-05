@@ -12,7 +12,7 @@ data class CurrentWeatherUiModel(
 )
 
 object CurrentWeatherUiModelMapper {
-    fun toCurrentWeatherUiModel(weatherData: WeatherData): CurrentWeatherUiModel {
+    fun fromWeatherData(weatherData: WeatherData): CurrentWeatherUiModel {
         return CurrentWeatherUiModel(
             cityName = weatherData.cityName,
             windDirection = weatherData.windData.direction.displayString,

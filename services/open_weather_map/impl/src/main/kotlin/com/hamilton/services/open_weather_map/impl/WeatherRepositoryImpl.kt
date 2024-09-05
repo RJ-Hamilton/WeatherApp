@@ -14,7 +14,9 @@ class WeatherRepositoryImpl(
             long = long
         )
 
-        return WeatherDataMapper.mapFromWeatherResponse(response)
+        return response.body()?.let {
+            WeatherDataMapper.mapFromWeatherResponse(it)
+        } ?: throw RuntimeException(response.errorBody().toString())
     }
 
     override suspend fun getForecastWeather(
@@ -28,8 +30,10 @@ class WeatherRepositoryImpl(
             numberOfTimestamps = numberOfTimeStamps
         )
 
-        return response.list.map { weatherDetails ->
-            WeatherDataMapper.mapFromWeatherDetails(weatherDetails)
-        }
+        return response.body()?.let {
+            it.list.map { weatherDetails ->
+                WeatherDataMapper.mapFromWeatherDetails(weatherDetails)
+            }
+        } ?: throw RuntimeException(response.errorBody().toString())
     }
 }

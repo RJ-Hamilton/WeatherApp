@@ -2,6 +2,8 @@ package com.hamilton.services.open_weather_map.api
 
 import com.hamilton.services.open_weather_map.api.models.ForecastResponse
 import com.hamilton.services.open_weather_map.api.models.WeatherResponse
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,7 +16,7 @@ interface OpenWeatherMapApi {
         @Query("lon") long: Double,
         @Query("appid") apiKey: String = API_KEY,
         @Query("units") units: String = "imperial"
-    ): WeatherResponse
+    ): Response<WeatherResponse>
 
     @GET("forecast")
     suspend fun getForecastWeather(
@@ -23,5 +25,5 @@ interface OpenWeatherMapApi {
         @Query("appid") apiKey: String = API_KEY,
         @Query("units") units: String = "imperial",
         @Query("cnt") numberOfTimestamps: Int? = null
-    ): ForecastResponse
+    ): Response<ForecastResponse>
 }

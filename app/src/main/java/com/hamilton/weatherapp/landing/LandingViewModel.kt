@@ -7,7 +7,7 @@ import com.hamilton.weatherapp.landing.models.CurrentWeatherUiModelMapper
 import com.hamilton.weatherapp.landing.models.HourlyWeatherUiModelMapper
 import com.hamilton.weatherapp.utils.LocationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LandingViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
-    private val locationManager: LocationManager
+    private val locationManager: LocationManager,
+    private val coroutineDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LandingScreenState())
     val uiState: StateFlow<LandingScreenState> = _uiState.asStateFlow()
@@ -35,8 +36,8 @@ class LandingViewModel @Inject constructor(
             showLoadingState()
             locationManager.saveLocation(latitude = latitude, longitude = longitude)
         }
-        try {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(coroutineDispatcher) {
+            try {
                 val currentWeather = weatherRepository.getCurrentWeather(
                     lat = latitude,
                     long = longitude
@@ -47,18 +48,18 @@ class LandingViewModel @Inject constructor(
                         isLoading = false,
                         isRefreshing = false,
                         latLong = LatLong(latitude = latitude, longitude = longitude),
-                        currentWeatherUiModel = CurrentWeatherUiModelMapper.toCurrentWeatherUiModel(
+                        currentWeatherUiModel = CurrentWeatherUiModelMapper.fromWeatherData(
                             weatherData = currentWeather
                         )
                     )
                 }
-            }
-        } catch (e: Exception) {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    isLoading = false,
-                    isRefreshing = false
-                )
+            } catch (e: Exception) {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        isRefreshing = false
+                    )
+                }
             }
         }
     }
@@ -71,8 +72,8 @@ class LandingViewModel @Inject constructor(
         } else {
             showLoadingState()
         }
-        try {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(coroutineDispatcher) {
+            try {
                 val forecastWeather = weatherRepository.getForecastWeather(
                     lat = latitude,
                     long = longitude
@@ -84,22 +85,23 @@ class LandingViewModel @Inject constructor(
                 _uiState.update { currentState ->
                     currentState.copy(
                         isLoading = false,
+                        isRefreshing = false,
                         hourlyWeatherUiModels = forecastWeather.filter {
                             it.date.date == currentDateTime.date
                         }.map { weatherData ->
-                            HourlyWeatherUiModelMapper.toHourlyWeatherUiModel(
+                            HourlyWeatherUiModelMapper.fromWeatherData(
                                 weatherData = weatherData
                             )
                         }
                     )
                 }
-            }
-        } catch (e: Exception) {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    isLoading = false,
-                    isRefreshing = false
-                )
+            } catch (e: Exception) {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        isRefreshing = false
+                    )
+                }
             }
         }
     }
