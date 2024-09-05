@@ -34,7 +34,7 @@ class ForecastItem(
                 weatherIconString
             )
         ) {
-            placeholder(R.drawable.ic_launcher_foreground) // Optional placeholder image
+            placeholder(R.drawable.ic_launcher_foreground)
             error(R.drawable.ic_launcher_foreground)
         }
     }
