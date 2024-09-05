@@ -1,11 +1,14 @@
 package com.hamilton.weatherapp.ui
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
@@ -45,33 +48,41 @@ fun WeatherBottomNavBar(
     modifier: Modifier = Modifier,
     onItemSelected: (Int) -> Unit
 ) {
-    BottomAppBar(
-        modifier = modifier,
-        containerColor = MaterialTheme.colorScheme.primary
-    ) {
-        var selectedIndex by rememberSaveable { mutableIntStateOf(HOME_BUTTON_INDEX) }
-
-        Row(
+    Column {
+        Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .selectableGroup(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .height(8.dp)
+                .background(color = MaterialTheme.colorScheme.background)
+        )
+        BottomAppBar(
+            modifier = modifier,
+            containerColor = MaterialTheme.colorScheme.primary
         ) {
-            BottomNavButton(
-                type = BottomNavButtonType.HOME,
-                onClick = { newSelectedIndex ->
-                    selectedIndex = newSelectedIndex
-                    onItemSelected(newSelectedIndex)
-                }
-            )
+            var selectedIndex by rememberSaveable { mutableIntStateOf(HOME_BUTTON_INDEX) }
 
-            BottomNavButton(
-                type = BottomNavButtonType.FORECAST,
-                onClick = { newSelectedIndex ->
-                    selectedIndex = newSelectedIndex
-                    onItemSelected(newSelectedIndex)
-                }
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .selectableGroup(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                BottomNavButton(
+                    type = BottomNavButtonType.HOME,
+                    onClick = { newSelectedIndex ->
+                        selectedIndex = newSelectedIndex
+                        onItemSelected(newSelectedIndex)
+                    }
+                )
+
+                BottomNavButton(
+                    type = BottomNavButtonType.FORECAST,
+                    onClick = { newSelectedIndex ->
+                        selectedIndex = newSelectedIndex
+                        onItemSelected(newSelectedIndex)
+                    }
+                )
+            }
         }
     }
 }

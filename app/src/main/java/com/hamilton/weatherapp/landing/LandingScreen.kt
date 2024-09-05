@@ -1,8 +1,8 @@
 package com.hamilton.weatherapp.landing
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -27,10 +27,10 @@ import com.hamilton.weatherapp.utils.VerticalSpacer
 fun LandingScreen(modifier: Modifier = Modifier) {
     val viewModel: LandingViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
-    val context = LocalContext.current as ComponentActivity
+    val context = LocalContext.current as Activity
 
     LocationPermissionRequester(
-        componentActivityContext = context,
+        activityContext = context,
         onLocationPermissionGranted = {
             getCurrentLocation(context) { lat, long ->
                 viewModel.getCurrentWeather(lat, long)

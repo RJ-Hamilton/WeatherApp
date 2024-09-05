@@ -2,8 +2,9 @@ package com.hamilton.weatherapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import javax.inject.Inject
 
-class LocationManager(context: Context) {
+class LocationManager @Inject constructor(context: Context) {
 
     companion object {
         private const val PREFS_NAME = "location_prefs"

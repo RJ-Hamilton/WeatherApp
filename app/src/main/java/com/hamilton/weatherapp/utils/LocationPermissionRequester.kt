@@ -1,11 +1,11 @@
 package com.hamilton.weatherapp.utils
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.AlertDialog
@@ -25,7 +25,7 @@ import com.hamilton.weatherapp.R
 
 @Composable
 fun LocationPermissionRequester(
-    componentActivityContext: ComponentActivity,
+    activityContext: Activity,
     onLocationPermissionGranted: () -> Unit
 ) {
     var showRationale by remember { mutableStateOf(false) }
@@ -42,7 +42,7 @@ fun LocationPermissionRequester(
     val settingsLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) {
-        if (isLocationPermissionGranted(componentActivityContext)) {
+        if (isLocationPermissionGranted(activityContext)) {
             showRationale = false
             onLocationPermissionGranted()
         } else {
@@ -52,18 +52,24 @@ fun LocationPermissionRequester(
 
     LaunchedEffect(Unit) {
         when {
-            isLocationPermissionGranted(componentActivityContext) -> {
+            isLocationPermissionGranted(activityContext) -> {
                 showRationale = false
                 onLocationPermissionGranted()
             }
 
-            shouldShowRequestPermissionRationale(componentActivityContext) -> {
+            shouldShowRequestPermissionRationale(activityContext) -> {
                 showRationale = true
             }
 
             else -> {
                 requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
             }
+        }
+    }
+
+    LaunchedEffect(hasPermission) {
+        if (hasPermission) {
+            onLocationPermissionGranted()
         }
     }
 
@@ -75,11 +81,11 @@ fun LocationPermissionRequester(
             negativeButtonText = stringResource(R.string.permission_rationale_negative_button_text),
             onDismissRequest = {
                 showRationale = true
-                componentActivityContext.finish()
+                activityContext.finish()
             },
             onGrantPermission = {
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", componentActivityContext.packageName, null)
+                    data = Uri.fromParts("package", activityContext.packageName, null)
                 }
                 settingsLauncher.launch(intent)
             }
@@ -137,16 +143,16 @@ fun PermissionRationale(
     )
 }
 
-private fun isLocationPermissionGranted(componentActivity: ComponentActivity): Boolean {
+private fun isLocationPermissionGranted(activityContext: Activity): Boolean {
     return ActivityCompat.checkSelfPermission(
-        componentActivity,
+        activityContext,
         Manifest.permission.ACCESS_COARSE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 }
 
-private fun shouldShowRequestPermissionRationale(componentActivity: ComponentActivity): Boolean {
+private fun shouldShowRequestPermissionRationale(activity: Activity): Boolean {
     return ActivityCompat.shouldShowRequestPermissionRationale(
-        componentActivity,
+        activity,
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
 }

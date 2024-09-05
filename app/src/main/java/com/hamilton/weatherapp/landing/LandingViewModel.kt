@@ -57,7 +57,8 @@ class LandingViewModel @Inject constructor(
                 _uiState.update { currentState ->
                     currentState.copy(
                         isLoading = false,
-                        isRefreshing = false
+                        isRefreshing = false,
+                        latLong = LatLong(latitude = latitude, longitude = longitude)
                     )
                 }
             }
