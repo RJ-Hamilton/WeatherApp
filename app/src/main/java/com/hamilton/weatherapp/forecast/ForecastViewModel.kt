@@ -7,7 +7,6 @@ import com.hamilton.weatherapp.forecast.models.ForecastItemUiModelMapper
 import com.hamilton.weatherapp.utils.LocationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,7 +34,7 @@ class ForecastViewModel @Inject constructor(
 
         viewModelScope.launch(coroutineDispatcher) {
             try {
-                val forecastWeather = weatherRepository.getForecastWeather(
+                val forecastWeather = weatherRepository.getDailyForecast(
                     lat = locationManager.getLatitude(),
                     long = locationManager.getLongitude()
                 )

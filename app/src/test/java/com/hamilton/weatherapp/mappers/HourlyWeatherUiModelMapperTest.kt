@@ -15,7 +15,7 @@ class HourlyWeatherUiModelMapperTest {
         // GIVEN
         val weatherData = WeatherTestData.weatherData
         val expectedTemperature = WeatherTestData.weatherData.temperatureData.temperature.toInt()
-        val expectedDate = WeatherTestData.currentDateTime
+        val expectedDate = WeatherTestData.testDateTime
 
         // WHEN
         val result = HourlyWeatherUiModelMapper.fromWeatherData(weatherData)

@@ -9,4 +9,8 @@ interface WeatherRepository {
         long: Double,
         numberOfTimeStamps: Int? = null
     ): List<WeatherData>
+    suspend fun getDailyForecast(
+        lat: Double,
+        long: Double
+    ): List<WeatherData>
 }

@@ -55,7 +55,7 @@ class ForecastViewModelTest {
         val listOfWeatherData = listOf(weatherData, weatherData, weatherData)
 
         coEvery {
-            mockWeatherRepository.getForecastWeather(any(), any())
+            mockWeatherRepository.getDailyForecast(any(), any())
         } returns listOfWeatherData
 
         every {
@@ -88,7 +88,7 @@ class ForecastViewModelTest {
             mockLocationManager.getLongitude()
         }
         coVerify(exactly = 1) {
-            mockWeatherRepository.getForecastWeather(37.7749, -122.4194)
+            mockWeatherRepository.getDailyForecast(37.7749, -122.4194)
         }
         assertEquals(
             ForecastScreenState(
@@ -109,7 +109,7 @@ class ForecastViewModelTest {
         val listOfWeatherData = listOf(weatherData, weatherData, weatherData)
 
         coEvery {
-            mockWeatherRepository.getForecastWeather(any(), any())
+            mockWeatherRepository.getDailyForecast(any(), any())
         } returns listOfWeatherData
 
         every {
@@ -143,7 +143,7 @@ class ForecastViewModelTest {
             mockLocationManager.getLongitude()
         }
         coVerify(exactly = 1) {
-            mockWeatherRepository.getForecastWeather(37.7749, -122.4194)
+            mockWeatherRepository.getDailyForecast(37.7749, -122.4194)
         }
         assertEquals(
             ForecastScreenState(
@@ -162,7 +162,7 @@ class ForecastViewModelTest {
     fun `getForecast should handle exceptions and update state correctly`() = runTest {
         // GIVEN
         coEvery {
-            mockWeatherRepository.getForecastWeather(any(), any())
+            mockWeatherRepository.getDailyForecast(any(), any())
         } throws RuntimeException("Error")
 
         every {
@@ -196,7 +196,7 @@ class ForecastViewModelTest {
             mockLocationManager.getLongitude()
         }
         coVerify(exactly = 1) {
-            mockWeatherRepository.getForecastWeather(37.7749, -122.4194)
+            mockWeatherRepository.getDailyForecast(37.7749, -122.4194)
         }
         assertEquals(
             ForecastScreenState(

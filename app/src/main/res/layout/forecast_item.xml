@@ -86,9 +86,10 @@
         android:id="@+id/layout_icon_with_description"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="12dp"
         android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/layout_date_and_wind"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -96,7 +97,7 @@
         <ImageView
             android:id="@+id/image_weather_icon"
             android:layout_width="wrap_content"
-            android:layout_height="72dp"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/forecast_screen_weather_icon_content_description"
             tools:src="@drawable/ic_launcher_foreground"
             tools:tint="@color/black" />

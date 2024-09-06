@@ -1,9 +1,14 @@
 package com.hamilton.weatherapp.repositories
 
 import com.hamilton.services.open_weather_map.api.OpenWeatherMapApi
+import com.hamilton.services.open_weather_map.api.domain.TemperatureData
+import com.hamilton.services.open_weather_map.api.domain.WeatherData
 import com.hamilton.services.open_weather_map.api.domain.WeatherDataMapper
+import com.hamilton.services.open_weather_map.api.domain.WindData
+import com.hamilton.services.open_weather_map.api.domain.WindDirection
 import com.hamilton.services.open_weather_map.impl.WeatherRepositoryImpl
 import com.hamilton.weatherapp.test_helpers.WeatherTestData
+import com.hamilton.weatherapp.test_helpers.WeatherTestData.testDateTime
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.every
@@ -130,6 +135,76 @@ class WeatherRepositoryImplTest {
             // WHEN & THEN
             val exception = assertFailsWith<RuntimeException> {
                 weatherRepository.getForecastWeather(37.7749, -122.4194, 2)
+            }
+            assertEquals("Error occurred", exception.message)
+        }
+
+    @Test
+    fun `getDailyForecast should return list of WeatherData when API call is successful`() =
+        runTest {
+            // GIVEN
+            val forecastResponse = WeatherTestData.forecastResponse
+
+            coEvery {
+                mockOpenWeatherMapApi.getForecastWeather(
+                    lat = any(),
+                    long = any(),
+                    numberOfTimestamps = any()
+                )
+            } returns Response.success(forecastResponse)
+
+            mockkObject(WeatherDataMapper)
+
+            every {
+                WeatherDataMapper.mapFromWeatherDetails(WeatherTestData.weatherDetails)
+            } returns WeatherTestData.weatherData
+
+            // WHEN
+            val result = weatherRepository.getDailyForecast(
+                lat = 37.7749,
+                long = -122.4194
+            )
+
+            // THEN
+            val expectedWeatherData = WeatherData(
+                cityName = "",
+                windData = WindData(speed = 28.29, direction = WindDirection.SOUTH),
+                temperatureData = TemperatureData(
+                    temperature = 0.0,
+                    temperatureHigh = 32.33,
+                    temperatureLow = 34.35,
+                    feelsLike = 0.0
+                ),
+                date = testDateTime,
+                weatherIcon = "10d",
+                weatherDescription = "cloudy"
+            )
+            val expected = listOf(
+                WeatherTestData.weatherData.copy(
+                    cityName = "",
+                    temperatureData = expectedWeatherData.temperatureData
+                )
+            )
+            assertEquals(expected, result)
+        }
+
+    @Test
+    fun `getDailyForecast should throw RuntimeException when API response is unsuccessful`() =
+        runTest {
+            // GIVEN
+            val errorBody = "Error occurred".toResponseBody()
+
+            coEvery {
+                mockOpenWeatherMapApi.getForecastWeather(
+                    lat = any(),
+                    long = any(),
+                    numberOfTimestamps = any()
+                )
+            } throws RuntimeException(errorBody.string())
+
+            // WHEN & THEN
+            val exception = assertFailsWith<RuntimeException> {
+                weatherRepository.getDailyForecast(37.7749, -122.4194)
             }
             assertEquals("Error occurred", exception.message)
         }

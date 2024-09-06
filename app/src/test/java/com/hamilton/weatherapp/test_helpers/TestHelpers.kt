@@ -14,13 +14,15 @@ import com.hamilton.services.open_weather_map.api.models.Weather
 import com.hamilton.services.open_weather_map.api.models.WeatherDetails
 import com.hamilton.services.open_weather_map.api.models.WeatherResponse
 import com.hamilton.services.open_weather_map.api.models.Wind
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 internal object WeatherTestData {
-    val currentDateTime = Clock.System.now().toLocalDateTime(
-        TimeZone.currentSystemDefault()
+    val testDateTime = LocalDateTime(
+        year = 2024,
+        monthNumber = 9,
+        dayOfMonth = 6,
+        hour = 12,
+        minute = 0,
     )
     val weatherData = WeatherData(
         cityName = "Grand Rapids",
@@ -34,7 +36,7 @@ internal object WeatherTestData {
             temperatureLow = 34.35,
             feelsLike = 36.37
         ),
-        date = currentDateTime,
+        date = testDateTime,
         weatherIcon = "10d",
         weatherDescription = "cloudy"
     )
